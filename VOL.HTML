@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style>
+        div {
+            position: absolute;
+            width: 380px;
+        }
+        
+        textarea, button {
+            position: absolute;
+        }
+        
+        #div-1 {
+            width: 380px;
+            height: 533px;
+            left: 0px;
+            top: 0px;
+        }
+
+        #div0 {
+            width: 300px;
+            height: 200px;
+            left: 0px;
+            top: 0px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        #div1 {
+            height: 68px;
+            left: 0px;
+            top: 200px;
+        }
+
+        #div2 {
+            height: 290px;
+            left: 0px;
+            top: 268px;
+        }
+
+        #name {
+            width: 230px;
+            height: 20px;
+            left: 12px;
+            top: 3px;
+        }
+
+        #no,
+        #page {
+            width: 50px;
+            height: 20px;
+            top: 3px;
+        }
+        
+        #no {
+            left: 254px;
+        }
+        
+        #page {
+            left: 318px;
+        }
+
+        #add,
+        #back {
+            width: 50px;
+            height: 38px;
+            top: 30px;
+        }
+        
+        #add {
+            left: 40px;
+        }
+        
+        #back {
+            left: 190px;
+        }
+
+        #textBox {
+            width: 370px;
+            height: 290px;
+            left: 0px;
+            top: 0px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div-1">
+        <div id="div0">
+            <ul id="ul"></ul>
+        </div>
+        <div id="div1">
+            <textarea id="name">name</textarea>
+            <textarea id="no">0</textarea>
+            <textarea id="page">0</textarea>
+            <button id="add">ADD</button>
+            <button id="back">BACK</button>
+        </div>
+        <div id="div2">
+            <textarea id="textBox"></textarea>
+        </div>
+    </div>
+    <script>
+        function $(id) {
+            return document.getElementById(id);
+        }
+    </script>
+    <script>
+        function setBlockUnload() {
+            function enable() {
+                window.onbeforeunload = function(e) {
+                    e = e || window.event;
+                    // 兼容IE8和Firefox 4之前的版本
+                    if (e) {
+                        e.returnValue = '离开提示';
+                    }
+                    // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+                    return '离开提示';
+                }
+                log("blockUnload: enable", "info");
+            }
+
+            function disable() {
+                window.onbeforeunload = null;
+                log("blockUnload: disable", "info");
+            }
+
+            setTimeout(function() {
+                enable();
+            }, 0)
+        }
+    </script>
+    <script>
+        const NAMES = [
+            "地球の子",
+            "ONE PIECE",
+            "HUNTER×HUNTER",
+            "僕のヒーローアカデミア",
+            "ブラッククローバー",
+            "呪術廻戦",
+            "夜桜さんちの大作戦",
+            "アンデッドアンラック",
+            "マッシュル-MASHLE-",
+            "僕とロボコ",
+            "高校生家族",
+            "SAKAMOTO DAYS",
+            "逃げ上手の若君",
+            "ウィッチウォッチ",
+            "アオのハコ",
+            "PPPPPP",
+            "あかね噺",
+            "ルリドラゴン",
+            "大東京鬼嫁伝",
+            "ギンカとリューナ",
+            "一ノ瀬家の大罪",
+            "暗号学園のいろは",
+            "ドロンドロロン",
+            "アヤシモン",
+            "守れ！しゅごまる",
+            "Dr.STONE ",
+            "一ノ瀬家の大罪 ",
+            "ウィッチウォッチ ",
+            "竜と檻人 ",
+            "あやかしトライアングル ",
+            "超能力者いのうさん。 "]
+
+        document.body.onload = function() {
+            let ul = $("ul"),
+                lis = NAMES.map(v => document.createElement("li")),
+                name = $("name"),
+                no = $("no"),
+                page = $("page"),
+                addBut = $("add"),
+                backBut = $("back"),
+                textBox = $("textBox");
+
+            lis.map((li, i) => {
+                li.innerText = NAMES[i];
+                li.onclick = () => {
+                    lis.map(e => e.style.color = e == lis[i] ? "red" : "black")
+                    name.value = NAMES[i];
+                }
+                ul.appendChild(li);
+            })
+
+            addBut.onclick = () => addVol(name.value, parseInt(no.value), parseInt(page.value));
+
+            backBut.onclick = () => backVol();
+
+            textBox.value = "";
+
+
+            function setName(name) {
+                name.innerText = name;
+            }
+
+            function addVol(name, no, page) {
+                let s = `${name} No${no},${("000"+page).slice(-3)}\n`;
+                textBox.value += s;
+                textBox.scrollTop = 0xffff;
+                setBlockUnload();
+            }
+
+            function backVol() {
+                let list = textBox.value.split("\n");
+                list.splice(list.length - 2, 1);
+                textBox.value = list.join("\n");
+                textBox.scrollTop = 0xffff;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
