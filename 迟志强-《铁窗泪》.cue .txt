@@ -1,0 +1,12 @@
+PERFORMER "程响"
+TITLE "四季予你"
+FILE "01 等你归来.wav" WAVE
+  TRACK 01 AUDIO
+    TITLE "等你归来"
+    PERFORMER "程响"
+    INDEX 01 00:00:00
+FILE "02 怎么能忘了.wav" WAVE
+  TRACK 02 AUDIO
+    TITLE "怎么能忘了"
+    PERFORMER "程响"
+    INDEX 01 00:00:00
